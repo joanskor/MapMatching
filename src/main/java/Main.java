@@ -31,7 +31,7 @@ public class Main {
         final Session session = getSession();
         try {
             System.out.println("querying all the managed entities...");
-                final Query query = session.createQuery("from NodesEntity");
+                final Query query = session.createQuery("from WaysEntity");
                 query.setMaxResults(10);
                 System.out.println("executing: " + query.getQueryString());
                 for (Object o : query.list()) {

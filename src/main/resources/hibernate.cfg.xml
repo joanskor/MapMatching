@@ -10,6 +10,8 @@
         <property name="connection.username">osm</property>
         <property name="connection.password">osm</property>
         <mapping class="model.NodesEntity"/>
+        <mapping class="model.WayNodesEntity"/>
+        <mapping class="model.WaysEntity"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

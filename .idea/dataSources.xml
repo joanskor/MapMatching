@@ -15,5 +15,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/osm</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="osm@localhost" uuid="920a988e-54df-4542-a67a-72147fa658bf">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/osm</jdbc-url>
+    </data-source>
   </component>
 </project>
