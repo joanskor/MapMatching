@@ -5,6 +5,7 @@ import com.vividsolutions.jts.geom.Polygon;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ public class WaysEntity {
     private int userId;
     private Timestamp tstamp;
     private long changesetId;
-    private List<NodesEntity> nodes;
+    private List<WayNodesEntity> nodes = new ArrayList<>();
     private Polygon bbox;
     private LineString linestring;
 
@@ -58,16 +59,6 @@ public class WaysEntity {
         this.changesetId = changesetId;
     }
 
-    @OneToMany
-    @Column(name = "nodes")
-    public List<NodesEntity> getNodes() {
-        return nodes;
-    }
-
-    public void setNodes(List<NodesEntity> nodes) {
-        this.nodes = nodes;
-    }
-
     @Basic
     @Column(name = "bbox")
     public Polygon getBbox() {
@@ -88,6 +79,14 @@ public class WaysEntity {
         this.linestring = linestring;
     }
 
+    @OneToMany(mappedBy = "wayId", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<WayNodesEntity> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<WayNodesEntity> nodes) {
+        this.nodes = nodes;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,7 +98,6 @@ public class WaysEntity {
         if (userId != that.userId) return false;
         if (changesetId != that.changesetId) return false;
         if (tstamp != null ? !tstamp.equals(that.tstamp) : that.tstamp != null) return false;
-        if (nodes != null ? !nodes.equals(that.nodes) : that.nodes != null) return false;
         if (bbox != null ? !bbox.equals(that.bbox) : that.bbox != null) return false;
         if (linestring != null ? !linestring.equals(that.linestring) : that.linestring != null) return false;
 
@@ -112,9 +110,21 @@ public class WaysEntity {
         result = 31 * result + userId;
         result = 31 * result + (tstamp != null ? tstamp.hashCode() : 0);
         result = 31 * result + (int) (changesetId ^ (changesetId >>> 32));
-        result = 31 * result + (nodes != null ? nodes.hashCode() : 0);
         result = 31 * result + (bbox != null ? bbox.hashCode() : 0);
         result = 31 * result + (linestring != null ? linestring.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "WaysEntity{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", tstamp=" + tstamp +
+                ", changesetId=" + changesetId +
+                ", nodes=" + nodes +
+                ", bbox=" + bbox +
+                ", linestring=" + linestring +
+                '}';
     }
 }

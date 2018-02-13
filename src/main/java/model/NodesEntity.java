@@ -8,6 +8,8 @@ import com.vividsolutions.jts.geom.Point;
 import javax.persistence.*;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "nodes", schema = "osm", catalog = "osm")
@@ -19,6 +21,8 @@ public class NodesEntity {
     private long changesetId;
     @Type(type = "jts_geometry")
     private Point geom;
+
+    private List<WayNodesEntity> ways = new ArrayList<>();
 
     @Id
     @Column(name = "id", nullable = false)
@@ -77,6 +81,14 @@ public class NodesEntity {
 
     public void setGeom(Point geom){
         this.geom = geom;
+    }
+    @OneToMany(mappedBy = "nodeId", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<WayNodesEntity> getWays() {
+        return ways;
+    }
+
+    public void setWays(List<WayNodesEntity> ways) {
+        this.ways = ways;
     }
 
     @Override

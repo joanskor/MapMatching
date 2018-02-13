@@ -1,32 +1,38 @@
 package model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "way_nodes", schema = "osm", catalog = "osm")
 @IdClass(WayNodesEntityPK.class)
 public class WayNodesEntity {
-    private long wayId;
-    private long nodeId;
+
+    private WaysEntity wayId;
+
+    private NodesEntity nodeId;
+
     private int sequenceId;
 
     @Id
-    @Column(name = "way_id")
-    public long getWayId() {
+    @ManyToOne
+    @JoinColumn(name="way_id")
+    public WaysEntity getWayId() {
         return wayId;
     }
 
-    public void setWayId(long wayId) {
+    public void setWayId(WaysEntity wayId) {
         this.wayId = wayId;
     }
 
-    @Basic
-    @Column(name = "node_id")
-    public long getNodeId() {
+
+    @ManyToOne
+    @JoinColumn(name = "node_id")
+    public NodesEntity getNodeId() {
         return nodeId;
     }
 
-    public void setNodeId(long nodeId) {
+    public void setNodeId(NodesEntity nodeId) {
         this.nodeId = nodeId;
     }
 
@@ -44,21 +50,22 @@ public class WayNodesEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         WayNodesEntity that = (WayNodesEntity) o;
-
-        if (wayId != that.wayId) return false;
-        if (nodeId != that.nodeId) return false;
-        if (sequenceId != that.sequenceId) return false;
-
-        return true;
+        return sequenceId == that.sequenceId &&
+                Objects.equals(wayId, that.wayId) &&
+                Objects.equals(nodeId, that.nodeId);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (wayId ^ (wayId >>> 32));
-        result = 31 * result + (int) (nodeId ^ (nodeId >>> 32));
-        result = 31 * result + sequenceId;
-        return result;
+
+        return Objects.hash(wayId, nodeId, sequenceId);
+    }
+
+    @Override
+    public String toString() {
+        return "WayNodesEntity{" +
+                "nodeId=" + nodeId +
+                '}';
     }
 }

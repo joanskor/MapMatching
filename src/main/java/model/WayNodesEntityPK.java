@@ -2,24 +2,25 @@ package model;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 public class WayNodesEntityPK implements Serializable {
-    private long wayId;
+    private WaysEntity wayId;
     private int sequenceId;
-
-    @Column(name = "way_id")
     @Id
-    public long getWayId() {
+    @ManyToOne
+    @JoinColumn(name="way_id")
+    public WaysEntity getWayId() {
         return wayId;
     }
 
-    public void setWayId(long wayId) {
+    public void setWayId(WaysEntity wayId) {
         this.wayId = wayId;
     }
-
-    @Column(name = "sequence_id")
     @Id
+    @Column(name = "sequence_id")
     public int getSequenceId() {
         return sequenceId;
     }
@@ -43,7 +44,7 @@ public class WayNodesEntityPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = (int) (wayId ^ (wayId >>> 32));
+        int result = (int) (wayId.getId() ^ (wayId.getId() >>> 32));
         result = 31 * result + sequenceId;
         return result;
     }

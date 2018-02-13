@@ -9,6 +9,7 @@
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="connection.username">osm</property>
         <property name="connection.password">osm</property>
+        <property name="show_sql">false</property>
         <mapping class="model.NodesEntity"/>
         <mapping class="model.WayNodesEntity"/>
         <mapping class="model.WaysEntity"/>
