@@ -1,14 +1,15 @@
 package model;
 
 import java.util.Date;
+import java.util.HashMap;
 
-public class TemporaryPointGPX {
+public class PointGPX {
 
     private double latitude;
     private double longitude;
     private Date time;
-
-    public TemporaryPointGPX(double latitude, double longitude, Date time) {
+    public HashMap<Long,Double> way_distances = new HashMap<>();
+    public PointGPX(double latitude, double longitude, Date time) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.time = time;

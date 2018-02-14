@@ -13,6 +13,7 @@
         <mapping class="model.NodesEntity"/>
         <mapping class="model.WayNodesEntity"/>
         <mapping class="model.WaysEntity"/>
+        <mapping class="model.EdgesEntity"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

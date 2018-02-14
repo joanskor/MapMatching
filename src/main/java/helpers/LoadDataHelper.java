@@ -5,7 +5,7 @@ import com.hs.gpxparser.modal.GPX;
 import com.hs.gpxparser.modal.Track;
 import com.hs.gpxparser.modal.TrackSegment;
 import com.hs.gpxparser.modal.Waypoint;
-import model.TemporaryPointGPX;
+import model.PointGPX;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,26 +29,26 @@ public class LoadDataHelper {
         return null;
     }
 
-    private static List<TemporaryPointGPX> getPointGPXData(String fileName) {
-        List<TemporaryPointGPX> pointGPXList = new ArrayList<>();
+    private static List<PointGPX> getPointGPXData(String fileName) {
+        List<PointGPX> pointGPXList = new ArrayList<>();
         GPX gpx = getGPXDataFromFile(fileName);
         if (gpx != null && gpx.getTracks() != null) {
             for (Track track : gpx.getTracks()) {
                 for (TrackSegment trackSegment : track.getTrackSegments()) {
                     System.out.println("Size of waypoints: " + trackSegment.getWaypoints().size());
                     for (Waypoint waypoint : trackSegment.getWaypoints())
-                        pointGPXList.add(new TemporaryPointGPX(waypoint.getLatitude(), waypoint.getLongitude(), waypoint.getTime()));
+                        pointGPXList.add(new PointGPX(waypoint.getLatitude(), waypoint.getLongitude(), waypoint.getTime()));
                 }
             }
         }
         return pointGPXList;
     }
 
-    public static List<TemporaryPointGPX> getFirstData() {
+    public static List<PointGPX> getFirstData() {
         return getPointGPXData(System.getProperty("user.dir") + "\\src\\main\\files\\1431627.gpx");
     }
 
-    public static List<TemporaryPointGPX> getSecondData() {
+    public static List<PointGPX> getSecondData() {
         return getPointGPXData(System.getProperty("user.dir") + "\\src\\main\\files\\1384589.gpx");
     }
 }

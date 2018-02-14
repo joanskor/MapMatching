@@ -1,3 +1,5 @@
+package db;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Metamodel;
 import org.hibernate.query.Query;
@@ -9,7 +11,7 @@ import javax.persistence.metamodel.EntityType;
 
 import java.util.Map;
 
-public class Main {
+public class DatabaseSession {
     private static final SessionFactory ourSessionFactory;
 
     static {
