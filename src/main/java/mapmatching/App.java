@@ -1,5 +1,6 @@
 package mapmatching;
 
+import helpers.LoadDataHelper;
 import model.TemporaryPointGPX;
 
 import java.util.List;
