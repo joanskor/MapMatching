@@ -1,6 +1,9 @@
 package mapmatching;
 
+import com.vividsolutions.jts.geom.*;
+import com.vividsolutions.jts.geom.impl.CoordinateArraySequenceFactory;
 import helpers.LoadDataHelper;
+import model.NodesEntity;
 import model.PointGPX;
 
 import java.util.List;
@@ -19,16 +22,22 @@ import java.util.Set;
  * Hello world!
  */
 public class App {
+    static List<PointGPX> points;
+    static Set<Long> edges = new HashSet<>();;
+    static Set<EdgesEntity> pathedges=new HashSet<>();
+    static ArrayList<NodesEntity> pathnodes=new ArrayList<>();
     public static void main(String[] args) {
         System.out.println(System.getProperty("user.dir"));
-        List<PointGPX> points = LoadDataHelper.getFirstData();
+         points = LoadDataHelper.getFirstData();
         //List<PointGPX> points = LoadDataHelper.getSecondData();
 
 
         final Session session = DatabaseSession.getSession();
         org.hibernate.Transaction tr = session.beginTransaction();
 
-        Set<Long> edges = new HashSet<>();
+        session.createNativeQuery("create table IF NOT EXISTS waysCosts (way_id decimal,cost decimal); create index IF NOT EXISTS idx_costs_way on waysCosts (way_id)").executeUpdate();
+        tr.commit();
+        tr = session.beginTransaction();
         for (PointGPX point : points) {
             final Query query = session.createNativeQuery("select a.* from (select e.osm_id " +
                     ", st_distance(e.geom_way,st_geomfromtext('POINT(" +  point.getLongitude() + " " + point.getLatitude() + ")',4326)) as tempdistance " +
@@ -60,12 +69,14 @@ public class App {
         }
         tr.commit();
         tr = session.beginTransaction();
+
         for(int i=0; i<points.size(); i+=4){
+            //System.out.println(i);
             int end=i+4;
             if(end>points.size()-1)
                 end=points.size()-1;
             Query pathQuery = session.createNativeQuery(
-                    " select edge FROM pgr_dijkstra(" +
+                    " select edge,node FROM pgr_dijkstra(" +
                             "'select osm_id as id,osm_source_id as source,osm_target_id as target" +
                             ",a.cost*COALESCE(w.cost,1) as cost" +
                             ",reverse_cost*COALESCE(w.cost,1) as reverse_cost" +
@@ -75,15 +86,26 @@ public class App {
                             ",(select osm_target_id from osm_2po_4pgr order by st_distance(geom_way" +
                             ",st_geomfromtext('POINT(" + points.get(end).getLongitude() + " " + points.get(end).getLatitude() + ")',4326)) limit 1)" +
                             ") order by seq");
-            List<BigInteger> result = pathQuery.list();
-            for (BigInteger o : result) {
-                if (o != BigInteger.valueOf(-1)) {
-                    List<EdgesEntity> entity = session.createQuery("from EdgesEntity e where e.osmId =" + o).list();
-                    System.out.println(entity.get(0));
+            List<Object[]> result = pathQuery.list();
+            for (Object[] o : result) {
+                if (((BigInteger)o[0]) != BigInteger.valueOf(-1)) {
+                   // List<EdgesEntity> edge = session.createQuery("from EdgesEntity e where e.osmId =" + (BigInteger)o[0]).list();
+                    //pathedges.add(edge.get(0));
+                    List<NodesEntity> node = session.createQuery("from NodesEntity e where e.id =" + (BigInteger)o[1]).list();
+                    if (pathnodes.isEmpty() || pathnodes.get(pathnodes.size()-1)!=node.get(0))
+                        pathnodes.add(node.get(0));
+                   // System.out.println(edge.get(0));
                 }
             }
         }
-        session.createNativeQuery("truncate table waysCosts").executeUpdate();
+        ArrayList<Coordinate> coordinates =new ArrayList<>();
+        for (NodesEntity n : pathnodes){
+            //System.out.println(n);
+            coordinates.add(n.getGeom().getCoordinate());
+        }
+        LineString path = new LineString(CoordinateArraySequenceFactory.instance().create(coordinates.toArray(new Coordinate[coordinates.size()])),new GeometryFactory());
+        System.out.println(path);
+        session.createNativeQuery("drop table waysCosts").executeUpdate();
         tr.commit();
         session.close();
     }
