@@ -10,6 +10,7 @@ import java.util.List;
 
 import db.DatabaseSession;
 import model.EdgesEntity;
+import model.ResultsEntity;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -36,6 +37,8 @@ public class App {
         org.hibernate.Transaction tr = session.beginTransaction();
 
         session.createNativeQuery("create table IF NOT EXISTS waysCosts (way_id decimal,cost decimal); create index IF NOT EXISTS idx_costs_way on waysCosts (way_id)").executeUpdate();
+        session.createNativeQuery("create table IF NOT EXISTS results (filename varchar(200));").executeUpdate();
+        //session.createNativeQuery("SELECT AddGeometryColumn('results', 'path', 4326, 'LINESTRING', 2);").list();
         tr.commit();
         tr = session.beginTransaction();
         for (PointGPX point : points) {
@@ -103,8 +106,10 @@ public class App {
             //System.out.println(n);
             coordinates.add(n.getGeom().getCoordinate());
         }
-        LineString path = new LineString(CoordinateArraySequenceFactory.instance().create(coordinates.toArray(new Coordinate[coordinates.size()])),new GeometryFactory());
+        LineString path = new LineString(CoordinateArraySequenceFactory.instance().create(coordinates.toArray(new Coordinate[coordinates.size()])),new GeometryFactory(new PrecisionModel(),4326));
         System.out.println(path);
+        ResultsEntity result = new ResultsEntity("first",path);
+        session.save(result);
         session.createNativeQuery("drop table waysCosts").executeUpdate();
         tr.commit();
         session.close();
