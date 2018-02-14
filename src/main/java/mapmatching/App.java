@@ -1,21 +1,22 @@
 package mapmatching;
 
-import com.vividsolutions.jts.geom.*;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.impl.CoordinateArraySequenceFactory;
+import db.DatabaseSession;
 import helpers.LoadDataHelper;
+import helpers.SaveDataHelper;
+import model.EdgesEntity;
 import model.NodesEntity;
 import model.PointGPX;
-
-import java.util.List;
-
-import db.DatabaseSession;
-import model.EdgesEntity;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,10 +27,10 @@ public class App {
     static Set<Long> edges = new HashSet<>();;
     static Set<EdgesEntity> pathedges=new HashSet<>();
     static ArrayList<NodesEntity> pathnodes=new ArrayList<>();
+
     public static void main(String[] args) {
-        System.out.println(System.getProperty("user.dir"));
-         points = LoadDataHelper.getFirstData();
-        //List<PointGPX> points = LoadDataHelper.getSecondData();
+        points = LoadDataHelper.getFirstData();
+//        points = LoadDataHelper.getSecondData();
 
 
         final Session session = DatabaseSession.getSession();
@@ -89,12 +90,12 @@ public class App {
             List<Object[]> result = pathQuery.list();
             for (Object[] o : result) {
                 if (((BigInteger)o[0]) != BigInteger.valueOf(-1)) {
-                   // List<EdgesEntity> edge = session.createQuery("from EdgesEntity e where e.osmId =" + (BigInteger)o[0]).list();
+                    // List<EdgesEntity> edge = session.createQuery("from EdgesEntity e where e.osmId =" + (BigInteger)o[0]).list();
                     //pathedges.add(edge.get(0));
                     List<NodesEntity> node = session.createQuery("from NodesEntity e where e.id =" + (BigInteger)o[1]).list();
                     if (pathnodes.isEmpty() || pathnodes.get(pathnodes.size()-1)!=node.get(0))
                         pathnodes.add(node.get(0));
-                   // System.out.println(edge.get(0));
+                    // System.out.println(edge.get(0));
                 }
             }
         }
@@ -105,6 +106,7 @@ public class App {
         }
         LineString path = new LineString(CoordinateArraySequenceFactory.instance().create(coordinates.toArray(new Coordinate[coordinates.size()])),new GeometryFactory());
         System.out.println(path);
+        SaveDataHelper.saveLinestring(path);
         session.createNativeQuery("drop table waysCosts").executeUpdate();
         tr.commit();
         session.close();
