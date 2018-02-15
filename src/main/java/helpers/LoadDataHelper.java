@@ -51,4 +51,7 @@ public class LoadDataHelper {
     public static List<PointGPX> getSecondData() {
         return getPointGPXData(System.getProperty("user.dir") + "\\src\\main\\files\\1384589.gpx");
     }
+    public static List<PointGPX> getThirdData() {
+        return getPointGPXData(System.getProperty("user.dir") + "\\src\\main\\files\\1512582.gpx");
+    }
 }
