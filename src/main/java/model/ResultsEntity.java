@@ -54,4 +54,5 @@ public class ResultsEntity {
         this.filename = filename;
         this.path = path;
     }
+    public ResultsEntity(){};
 }

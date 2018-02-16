@@ -31,16 +31,18 @@ public class App {
     static ArrayList<NodesEntity> pathnodes=new ArrayList<>();
 
     public static void main(String[] args) {
-        points = LoadDataHelper.getFirstData();
-//        points = LoadDataHelper.getSecondData();
+        System.out.println(System.getProperty("user.dir"));
 
+//        points = LoadDataHelper.getFirstData();
+//        points = LoadDataHelper.getSecondData();
+        points = LoadDataHelper.getThirdData();
 
         final Session session = DatabaseSession.getSession();
         org.hibernate.Transaction tr = session.beginTransaction();
         //tabelka pomocnicza
         session.createNativeQuery("create table IF NOT EXISTS waysCosts (way_id decimal,cost decimal); create index IF NOT EXISTS idx_costs_way on waysCosts (way_id)").executeUpdate();
         //tabelka z wynikami
-        session.createNativeQuery("create table IF NOT EXISTS results (filename varchar(200));").executeUpdate();
+        //session.createNativeQuery("create table IF NOT EXISTS results (filename varchar(200));").executeUpdate();
         //jeśli tworzona, to dodaj geometry
         //session.createNativeQuery("SELECT AddGeometryColumn('results', 'path', 4326, 'LINESTRING', 2);").list();
         tr.commit();
@@ -81,29 +83,34 @@ public class App {
         tr = session.beginTransaction();
         //liczenie prawdopodobnej trasy między dwoma punktami za pomocą djikstra
         //trasa liczona co 4 punkty, żeby obejść pętle
-        for(int i=0; i<points.size(); i+=4){
+        for(int i=0; i<points.size(); i+=20){
             //System.out.println(i);
-            int end=i+4;
+            int end=i+20;
             if(end>points.size()-1)
                 end=points.size()-1;
-            Query pathQuery = session.createNativeQuery(
-                    " select edge,node FROM pgr_dijkstra(" +
-                            "'select osm_id as id,osm_source_id as source,osm_target_id as target" +
-                            //koszt pomnożony przez wagę odległości
-                            ",a.cost*COALESCE(w.cost,1) as cost" +
-                            ",reverse_cost*COALESCE(w.cost,1) as reverse_cost" +
-                            " from osm_2po_4pgr a left join waysCosts w on (w.way_id=a.osm_id)'" +
-                            //jako punkt startowy, brany jest punkt startowy najbliższej krawędzi początkowego punktu gpx
-                            ",(select osm_source_id from osm_2po_4pgr order by st_distance(geom_way" +
-                            ",st_geomfromtext('POINT(" + points.get(i).getLongitude() + " " + points.get(i).getLatitude() + ")',4326)) limit 1)" +
-                            //jako punkt końcowy, brany jest punkt końcowy najbliższej krawędzi początkowego punktu gpx
-                            ",(select osm_target_id from osm_2po_4pgr order by st_distance(geom_way" +
-                            ",st_geomfromtext('POINT(" + points.get(end).getLongitude() + " " + points.get(end).getLatitude() + ")',4326)) limit 1)" +
-                            ") order by seq");
+            String query=" select edge,node FROM pgr_dijkstra(" +
+                    "'select osm_id as id,osm_source_id as source,osm_target_id as target" +
+                    //koszt pomnożony przez wagę odległości
+                    ",a.cost*COALESCE(w.cost,1) as cost" +
+                    ",reverse_cost*COALESCE(w.cost,1) as reverse_cost" +
+                    " from osm_2po_4pgr a left join waysCosts w on (w.way_id=a.osm_id)'";
+            if(i==0||pathnodes.isEmpty())
+                    //jako punkt startowy, brany jest punkt startowy najbliższej krawędzi początkowego punktu gpx
+                query+=",(select osm_source_id from osm_2po_4pgr order by st_distance(geom_way" +
+                    ",st_geomfromtext('POINT(" + points.get(i).getLongitude() + " " + points.get(i).getLatitude() + ")',4326)) limit 1)";
+            else
+                query+="," +pathnodes.get(pathnodes.size()-1).getId();
+
+                    //jako punkt końcowy, brany jest punkt końcowy najbliższej krawędzi początkowego punktu gpx
+            query+=",(select osm_target_id from osm_2po_4pgr order by st_distance(geom_way" +
+                    ",st_geomfromtext('POINT(" + points.get(end).getLongitude() + " " + points.get(end).getLatitude() + ")',4326)) limit 1)" +
+                    ") order by seq";
+
+            Query pathQuery = session.createNativeQuery(query);
             List<Object[]> result = pathQuery.list();
             for (Object[] o : result) {
                 //zwracało mi jakąś krawędź o id=-1 stąd warunek
-                if (((BigInteger)o[0]) != BigInteger.valueOf(-1)) {
+                //if (((BigInteger)o[0]) != BigInteger.valueOf(-1)) {
                     //pobieranie z bazy krawędzi
                    // List<EdgesEntity> edge = session.createQuery("from EdgesEntity e where e.osmId =" + (BigInteger)o[0]).list();
                     //pathedges.add(edge.get(0));
@@ -114,7 +121,7 @@ public class App {
                         //zapis ścieżki w nodach
                         pathnodes.add(node.get(0));
                    // System.out.println(edge.get(0));
-                }
+               // }
             }
         }
         //**********tworzenie linestringa

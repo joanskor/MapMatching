@@ -24,17 +24,7 @@ public class SaveDataHelper {
         TrackSegment trackSegment = new TrackSegment();
         Track track = new Track();
         GPX gpx = new GPX();
-        Bounds bounds = new Bounds(50.057289, 50.092066, 19.799959, 19.961568);
-        Metadata metadata = new Metadata();
-        gpx.setCreator("MapCreator");
-        HashSet<Link> links = new HashSet<>();
-        Link link = new Link("www.agh.edu.pl");
-        link.setText("AGH");
-        links.add(link);
-        metadata.setLinks(links);
-        metadata.setTime(new Date());
-        metadata.setBounds(bounds);
-        gpx.setMetadata(metadata);
+
         System.out.println("Coordinates json:");
 
         String linestringJson = "{\"linestring\":[";
