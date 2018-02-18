@@ -82,7 +82,7 @@ public class Matcher {
                     "'select id as id,osm_source_id as source,osm_target_id as target" +
                     //koszt pomnożony przez wagę odległości
                     ",a.cost*COALESCE(w.cost,1) as cost" +
-                    ",case when reverse_cost<100 then reverse_cost*COALESCE(w.cost,1) else reverse_cost end as reverse_cost" +
+                    ",case when reverse_cost<>1000000 then reverse_cost*COALESCE(w.cost,1) else reverse_cost end as reverse_cost" +
                     " from osm_2po_4pgr a left join waysCosts w on (w.way_id=a.id)'";
             if(i==0||pathnodes.isEmpty())
                 //jako punkt startowy, brany jest punkt startowy najbliższej krawędzi początkowego punktu gpx
