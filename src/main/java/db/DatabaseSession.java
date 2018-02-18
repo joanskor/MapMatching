@@ -29,18 +29,4 @@ public class DatabaseSession {
         return ourSessionFactory.openSession();
     }
 
-    public static void main(final String[] args) throws Exception {
-        final Session session = getSession();
-        try {
-            System.out.println("querying all the managed entities...");
-                final Query query = session.createQuery("from WaysEntity");
-                query.setMaxResults(10);
-                System.out.println("executing: " + query.getQueryString());
-                for (Object o : query.list()) {
-                    System.out.println("  " + o);
-                }
-        } finally {
-            session.close();
-        }
-    }
 }

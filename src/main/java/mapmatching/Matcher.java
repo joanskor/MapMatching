@@ -2,7 +2,6 @@ package mapmatching;
 
 import com.vividsolutions.jts.geom.*;
 import com.vividsolutions.jts.geom.impl.CoordinateArraySequenceFactory;
-import model.NodesEntity;
 import model.PointGPX;
 
 import java.util.*;
