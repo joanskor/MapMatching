@@ -6,34 +6,22 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.PrecisionModel;
 import com.vividsolutions.jts.geom.impl.CoordinateArraySequenceFactory;
 import db.DatabaseSession;
-import helpers.LoadDataHelper;
 import helpers.SaveDataHelper;
 import model.EdgesEntity;
-import model.NodesEntity;
 import model.PointGPX;
-
-import java.util.*;
-
-import db.DatabaseSession;
-import model.EdgesEntity;
 import model.ResultsEntity;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class Matcher {
 
      Set<Long> edges = new HashSet<>();;
-     ArrayList<EdgesEntity> pathedges=new ArrayList<>();
-     ArrayList<NodesEntity> pathnodes=new ArrayList<>();
      ArrayList<Coordinate> pathcoordinates = new ArrayList<>();
-
+    ArrayList<EdgesEntity> pathedges=new ArrayList<>();
      //points: lista punktów
      //edgeNumber: liczba krawędzi którym obniżane są koszty
      //segmentNumber: liczba segmentów, na które dzielona jest trasa
@@ -84,6 +72,7 @@ public class Matcher {
         tr = session.beginTransaction();
         //liczenie prawdopodobnej trasy między dwoma punktami za pomocą djikstra
         //trasa liczona co n punktów, żeby obejść pętle
+        long lastNodeId=0l;
         for(int i=0; i<points.size(); i+=segmentNumber){
             //System.out.println(i);
             int end=i+segmentNumber;
@@ -95,12 +84,12 @@ public class Matcher {
                     ",a.cost*COALESCE(w.cost,1) as cost" +
                     ",case when reverse_cost<>1000000 then reverse_cost*COALESCE(w.cost,1) else reverse_cost end as reverse_cost" +
                     " from osm_2po_4pgr a left join waysCosts w on (w.way_id=a.id)'";
-            if(i==0||pathnodes.isEmpty())
+            if(lastNodeId==0l)
                 //jako punkt startowy, brany jest punkt startowy najbliższej krawędzi początkowego punktu gpx
                 query+=",(select osm_source_id from osm_2po_4pgr order by st_distance(geom_way" +
                         ",st_geomfromtext('POINT(" + points.get(i).getLongitude() + " " + points.get(i).getLatitude() + ")',4326)) limit 1)";
             else
-                query+="," +pathnodes.get(pathnodes.size()-1).getId();
+                query+="," +lastNodeId;
 
             //jako punkt końcowy, brany jest punkt końcowy najbliższej krawędzi końcowego punktu gpx
             query+=",(select osm_target_id from osm_2po_4pgr order by st_distance(geom_way" +
@@ -130,12 +119,8 @@ public class Matcher {
                     }
 
                 }
-                //pobieranie z bazy nodów
-                List<NodesEntity> node = session.createQuery("from NodesEntity e where e.id =" + (BigInteger)o[1]).list();
-                //zapis ścieżki w nodach
-                pathnodes.add(node.get(0));
-                // System.out.println(edge.get(0));
-                // }
+                //ustawienie końcowego wierzchołka segmentu.
+                lastNodeId=((BigInteger)o[1]).longValue();
             }
         }
         //konstrukcja linestring
