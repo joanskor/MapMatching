@@ -3,22 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="9650b5d6-6ec7-452c-8bd0-828db751ae13" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/MapMatching.iml" afterPath="$PROJECT_DIR$/MapMatching.iml" />
       <change beforePath="$PROJECT_DIR$/results.gpx" afterPath="$PROJECT_DIR$/results.gpx" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/DatabaseSession.java" afterPath="$PROJECT_DIR$/src/main/java/db/DatabaseSession.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mapmatching/Matcher.java" afterPath="$PROJECT_DIR$/src/main/java/mapmatching/Matcher.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/NodesEntity.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/WayNodesEntity.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/WayNodesEntityPK.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/WaysEntity.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/DatabaseSession.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mapmatching/App.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/NodesEntity.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/WayNodesEntity.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/WayNodesEntityPK.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/WaysEntity.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/files/outputData.gpx" afterPath="$PROJECT_DIR$/src/main/files/outputData.gpx" />
+      <change beforePath="$PROJECT_DIR$/src/main/files/result_distance.gpx" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" afterPath="$PROJECT_DIR$/src/main/java/Main.java" />
+      <change beforePath="$PROJECT_DIR$/target/classes/helpers/SaveDataHelper.class" afterPath="$PROJECT_DIR$/target/classes/helpers/SaveDataHelper.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/outputData.gpx" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/result_distance.gpx" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -77,7 +68,7 @@
       <file leaf-file-name="Matcher.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/mapmatching/Matcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
+            <state relative-caret-position="-275">
               <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -95,9 +86,21 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state relative-caret-position="250">
+              <caret line="15" column="38" lean-forward="false" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SaveDataHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/helpers/SaveDataHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="632">
+              <caret line="52" column="110" lean-forward="false" selection-start-line="52" selection-start-column="110" selection-end-line="52" selection-end-column="110" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -149,8 +152,8 @@
         <option value="$PROJECT_DIR$/src/main/java/helpers/SaveLinestringHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/mapmatching/App.java" />
         <option value="$PROJECT_DIR$/src/main/java/helpers/SaveDataHelper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/mapmatching/Matcher.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Main.java" />
       </list>
     </option>
   </component>
@@ -167,7 +170,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-19" />
     <option name="y" value="124" />
     <option name="width" value="1942" />
@@ -435,10 +438,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50802000" />
+    <option name="totallyTimeSpent" value="55599000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-11" width="1942" height="1042" extended-state="7" />
+    <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -451,12 +454,12 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7060932" sideWeight="0.50216216" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.47789726" sideWeight="0.49783784" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47789726" sideWeight="0.49783784" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914287" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28594595" sideWeight="0.3272311" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28594595" sideWeight="0.3213859" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28594595" sideWeight="0.6727689" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28594595" sideWeight="0.6786141" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2681081" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -795,7 +798,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/mapmatching/App.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/helpers/SaveDataHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
+        <state relative-caret-position="632">
           <caret line="52" column="110" lean-forward="false" selection-start-line="52" selection-start-column="110" selection-end-line="52" selection-end-column="110" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -805,7 +808,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/mapmatching/Matcher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
+        <state relative-caret-position="-275">
           <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -821,8 +824,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        <state relative-caret-position="250">
+          <caret line="15" column="38" lean-forward="false" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
           <folding />
         </state>
       </provider>
